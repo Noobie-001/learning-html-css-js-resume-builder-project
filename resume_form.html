@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Builder</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e6f7ff;
+            color: #333;
+        }
+
+        header {
+            background-color: #0073e6;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 1.8em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #0073e6;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        section {
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Styles */
+        form label {
+            font-size: 1em;
+            color: #555;
+        }
+
+        form input, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        form button {
+            background-color: #0073e6;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        form button:hover {
+            background-color: #005bb5;
+        }
+
+        /* Template Selection */
+        .template-selection {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .template-btn {
+            background-color: #0073e6;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .template-btn:hover {
+            background-color: #005bb5;
+        }
+
+        /* Resume Preview Styles */
+        .resume-container {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1em;
+        }
+
+        .resume-header {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Template 1: Simple */
+        .template-1 .resume-header {
+            background-color: #0073e6;
+            color: white;
+            padding: 20px;
+        }
+
+        .template-1 h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .template-1 p {
+            font-size: 1.2em;
+            margin-top: 5px;
+            color: #777;
+        }
+
+        .template-1 .resume-section h2 {
+            color: #0073e6;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        /* Template 2: Modern Two-Column Layout */
+        .template-2 .resume-header {
+            background-color: #333;
+            color: white;
+            padding: 30px;
+        }
+
+        .template-2 h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .template-2 p {
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        .template-2 .resume-body {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .template-2 .main-content {
+            width: 65%;
+        }
+
+        .template-2 .sidebar {
+            width: 30%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .template-2 .resume-section h2 {
+            color: #333;
+            font-size: 1.4em;
+        }
+
+        /* Template 3: Professional with References */
+        .template-3 .resume-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 25px;
+        }
+
+        .template-3 h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+
+        .template-3 p {
+            font-size: 1.1em;
+            margin-top: 5px;
+        }
+
+        .template-3 .resume-section h2 {
+            color: #4CAF50;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .template-3 .resume-body {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+
+        .template-3 .sidebar {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .template-3 .references {
+            margin-top: 30px;
+        }
+
+        .template-3 .references h3 {
+            font-size: 1.2em;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
+        .template-3 .references p {
+            font-size: 1em;
+            color: #777;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        Build Your Professional Resume
+    </header>
+
+    <section>
+        <h2>Enter Your Information</h2>
+        <form id="resume-form">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+
+            <label for="contact">Contact Information</label>
+            <input type="text" id="contact" name="contact" placeholder="Phone Number" required>
+            <input type="email" id="email" name="email" placeholder="Email Address" required>
+
+            <label for="objective">Objective</label>
+            <textarea id="objective" name="objective" placeholder="Your career objective" required></textarea>
+
+            <label for="education">Education</label>
+            <textarea id="education" name="education" placeholder="Your high school, college, and other education details" required></textarea>
+
+            <label for="experience">Work Experience</label>
+            <textarea id="experience" name="experience" placeholder="Your work experience" required></textarea>
+
+            <label for="skills">Skills</label>
+            <textarea id="skills" name="skills" placeholder="Your skills (e.g., programming, communication)" required></textarea>
+
+            <label for="activities">Activities</label>
+            <textarea id="activities" name="activities" placeholder="Your extracurricular activities" required></textarea>
+
+            <button type="submit">Generate Resume Preview</button>
+        </form>
+    </section>
+
+    <!-- Template Selection Section -->
+    <section class="template-selection">
+        <h2>Select Resume Template</h2>
+        <button class="template-btn" id="template-1">Template 1</button>
+        <button class="template-btn" id="template-2">Template 2</button>
+        <button class="template-btn" id="template-3">Template 3</button>
+    </section>
+
+    <section id="preview-section" style="display:none;">
+        <h2>Resume Preview</h2>
+        <div id="resume-preview" class="resume-container"></div>
+        <button id="download-btn">Download as PDF</button>
+    </section>
+
+    <footer>
+        &copy; 2024 Resume Builder. All rights reserved.
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // Set initial template to 1
+        let selectedTemplate = 'template-1';
+
+        // Template selection logic
+        document.querySelectorAll('.template-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                selectedTemplate = this.id;
+                alert(`${this.innerText} selected!`);
+            });
+        });
+
+        // Form submission logic
+        document.getElementById('resume-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Collect user inputs
+            const name = document.getElementById('name').value;
+            const contact = document.getElementById('contact').value;
+            const email = document.getElementById('email').value;
+            const objective = document.getElementById('objective').value;
+            const education = document.getElementById('education').value;
+            const experience = document.getElementById('experience').value;
+            const skills = document.getElementById('skills').value;
+            const activities = document.getElementById('activities').value;
+
+            // Generate the resume preview based on selected template
+            const preview = `
+                <div class="resume-header">
+                    <h1>${name}</h1>
+                    <p>${contact} | ${email}</p>
+                </div>
+                <div class="resume-section">
+                    <h2>Objective</h2>
+                    <p>${objective}</p>
+                </div>
+                <div class="resume-section">
+                    <h2>Education</h2>
+                    <p>${education}</p>
+                </div>
+                <div class="resume-section">
+                    <h2>Work Experience</h2>
+                    <p>${experience}</p>
+                </div>
+                <div class="resume-section">
+                    <h2>Skills</h2>
+                    <p>${skills}</p>
+                </div>
+                <div class="resume-section">
+                    <h2>Activities</h2>
+                    <p>${activities}</p>
+                </div>
+            `;
+
+            // Show the preview
+            document.getElementById('resume-preview').innerHTML = preview;
+            document.getElementById('resume-preview').classList.add(selectedTemplate); // Add selected template class
+            document.getElementById('preview-section').style.display = 'block';
+
+            // Enable PDF download
+            document.getElementById('download-btn').addEventListener('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFontSize(18);
+                doc.text(name, 10, 10);
+                doc.setFontSize(12);
+                doc.text(`Contact: ${contact}`, 10, 20);
+                doc.text(`Email: ${email}`, 10, 30);
+
+                doc.text('Objective:', 10, 40);
+                doc.text(objective, 10, 50, { maxWidth: 180 });
+
+                doc.text('Education:', 10, 70);
+                doc.text(education, 10, 80, { maxWidth: 180 });
+
+                doc.text('Work Experience:', 10, 100);
+                doc.text(experience, 10, 110, { maxWidth: 180 });
+
+                doc.text('Skills:', 10, 130);
+                doc.text(skills, 10, 140, { maxWidth: 180 });
+
+                doc.text('Activities:', 10, 160);
+                doc.text(activities, 10, 170, { maxWidth: 180 });
+
+                doc.save(`${name}_resume.pdf`);
+            });
+        });
+    </script>
+</body>
+</html>
